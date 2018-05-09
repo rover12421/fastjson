@@ -4,8 +4,10 @@ version '1.2.47'
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'signing'
+apply plugin: 'idea'
 
 sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 buildscript {
     repositories {
@@ -27,6 +29,15 @@ repositories {
     jcenter()
 }
 
+configurations {
+    provided
+}
+
+sourceSets {
+    main { compileClasspath += configurations.provided }
+    test { compileClasspath += configurations.provided }
+}
+
 def loadProperties(String sourceFileName) {
     def config = new Properties()
     def propFile = new File(sourceFileName)
@@ -43,19 +54,19 @@ def loadProperties(String sourceFileName) {
 loadProperties("local.properties")
 
 dependencies {
-    compileOnly 'javax.servlet:javax.servlet-api:3.1.0'
-    compileOnly 'javax.ws.rs:javax.ws.rs-api:2.0.1'
-    compileOnly 'org.apache.cxf:cxf-rt-transports-http:3.1.2'
-    compileOnly 'org.apache.cxf:cxf-rt-frontend-jaxrs:3.1.2'
-    compileOnly 'org.springframework:spring-websocket:4.3.7.RELEASE'
-    compileOnly 'org.springframework:spring-webmvc:4.3.7.RELEASE'
-    compileOnly 'org.springframework:spring-messaging:4.3.7.RELEASE'
-    compileOnly 'org.springframework.data:spring-data-redis:1.8.6.RELEASE'
-    compileOnly 'com.squareup.retrofit2:retrofit:2.1.0'
-    compileOnly 'com.squareup.okhttp3:okhttp:3.6.0'
-    compileOnly 'io.springfox:springfox-spring-web:2.6.1'
-    compileOnly 'io.javaslang:javaslang:2.0.6'
-    compileOnly 'org.glassfish.jersey.core:jersey-common:2.23.2'
+    provided 'javax.servlet:javax.servlet-api:3.1.0'
+    provided 'javax.ws.rs:javax.ws.rs-api:2.0.1'
+    provided 'org.apache.cxf:cxf-rt-transports-http:3.1.2'
+    provided 'org.apache.cxf:cxf-rt-frontend-jaxrs:3.1.2'
+    provided 'org.springframework:spring-websocket:4.3.7.RELEASE'
+    provided 'org.springframework:spring-webmvc:4.3.7.RELEASE'
+    provided 'org.springframework:spring-messaging:4.3.7.RELEASE'
+    provided 'org.springframework.data:spring-data-redis:1.8.6.RELEASE'
+    provided 'com.squareup.retrofit2:retrofit:2.1.0'
+    provided 'com.squareup.okhttp3:okhttp:3.6.0'
+    provided 'io.springfox:springfox-spring-web:2.6.1'
+    provided 'io.javaslang:javaslang:2.0.6'
+    provided 'org.glassfish.jersey.core:jersey-common:2.23.2'
 
     testCompile 'org.eclipse.jetty:jetty-server:8.1.8.v20121106'
     testCompile 'org.eclipse.jetty:jetty-webapp:8.1.8.v20121106'
