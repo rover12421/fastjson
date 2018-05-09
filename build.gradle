@@ -66,7 +66,7 @@ dependencies {
     testCompile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.8.7'
     testCompile 'com.googlecode.json-simple:json-simple:1.1.1'
     testCompile 'commons-io:commons-io:1.4'
-    testCompile 'net.sf.json-lib:json-lib:2.4'
+    testCompile 'net.sf.json-lib:json-lib:2.4:jdk15'
     testCompile 'com.google.code.gson:gson:2.6.2'
     testCompile 'net.minidev:json-smart:2.2.1'
     testCompile 'org.clojure:clojure:1.5.1'
