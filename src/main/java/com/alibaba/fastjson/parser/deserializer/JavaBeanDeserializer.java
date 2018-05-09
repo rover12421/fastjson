@@ -22,6 +22,7 @@ import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.util.FieldInfo;
 import com.alibaba.fastjson.util.JavaBeanInfo;
 import com.alibaba.fastjson.util.TypeUtils;
+import sun.misc.Unsafe;
 
 public class JavaBeanDeserializer implements ObjectDeserializer {
 
@@ -351,6 +352,8 @@ public class JavaBeanDeserializer implements ObjectDeserializer {
     protected Enum<?> scanEnum(JSONLexer lexer, char seperator) {
         throw new JSONException("illegal enum. " + lexer.info());
     }
+
+    private final UnsafeAllocator unsafeAllocator = UnsafeAllocator.create();
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     protected <T> T deserialze(DefaultJSONParser parser, // 
@@ -804,6 +807,17 @@ public class JavaBeanDeserializer implements ObjectDeserializer {
                         childContext = parser.setContext(context, object, fieldName);
                     }
                     return (T) object;
+                }
+
+                if (lexer.isEnabled(Feature.UnsafeAllocateInstance) && type instanceof Class) {
+                    Class<?> clazz = (Class<?>) type;
+
+                    try {
+                        return (T) unsafeAllocator.newInstance(clazz);
+                    } catch (Exception e) {
+                        throw new JSONException("UnsafeAllocateInstance create instance error, "
+                                + clazz, e);
+                    }
                 }
 
                 String[] paramNames = beanInfo.creatorConstructorParameters;

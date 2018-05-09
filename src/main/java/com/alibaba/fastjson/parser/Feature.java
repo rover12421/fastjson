@@ -135,7 +135,12 @@ public enum Feature {
     /**
      * @since 1.2.45
      */
-    CustomMapDeserializer
+    CustomMapDeserializer,
+
+    /**
+     * @since 1.2.47 for "com.rover12421:fastjson:1.2.47"
+     */
+    UnsafeAllocateInstance
     ;
 
     Feature(){
